@@ -1,4 +1,5 @@
 
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import {
@@ -6,14 +7,19 @@ import {
   Badge,
   Heading,
   SectionContainer,
-  FormInput,
-  FormTextarea
+  Card
 } from "@/components/ui-components";
-import { useEffect, useState } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
+import { Eye, Shield, Check } from "lucide-react";
 
 const Contact = () => {
-  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [contactRevealed, setContactRevealed] = useState(false);
+  const [captchaValue, setCaptchaValue] = useState("");
+  const [userInput, setUserInput] = useState("");
+  const [captchaCompleted, setCaptchaCompleted] = useState(false);
+  const [humanChecked, setHumanChecked] = useState(false);
   
   useEffect(() => {
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
@@ -33,30 +39,40 @@ const Contact = () => {
     const elements = document.querySelectorAll(".animate-on-scroll");
     elements.forEach((el) => observer.observe(el));
 
+    // Generate random captcha value
+    const generateCaptcha = () => {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+      let result = '';
+      for (let i = 0; i < 6; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      setCaptchaValue(result);
+    }
+    
+    generateCaptcha();
+
     return () => {
       elements.forEach((el) => observer.unobserve(el));
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setFormStatus("submitting");
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setFormStatus("success");
+  const handleRevealContact = () => {
+    if (userInput.toLowerCase() === captchaValue.toLowerCase() && humanChecked) {
+      setContactRevealed(true);
+      setCaptchaCompleted(true);
       toast({
-        title: "Message Sent!",
-        description: "We'll get back to you as soon as possible.",
+        title: "Verification Complete",
+        description: "Contact information has been revealed.",
         duration: 5000,
       });
-      
-      // Reset form
-      const form = e.target as HTMLFormElement;
-      form.reset();
-      
-      setFormStatus("idle");
-    }, 1500);
+    } else {
+      toast({
+        title: "Verification Failed",
+        description: "Please try again with the correct code.",
+        variant: "destructive",
+        duration: 5000,
+      });
+    }
   };
 
   return (
@@ -82,211 +98,219 @@ const Contact = () => {
       {/* Contact Information */}
       <section className="py-16">
         <SectionContainer>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Contact Form */}
-            <div className="lg:col-span-2 animate-on-scroll">
-              <Heading as="h2" withAccent>
-                Send Us a Message
-              </Heading>
-              <p className="text-foreground/80 mb-8">
-                Fill out the form below and we'll get back to you as soon as possible.
-              </p>
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <FormInput
-                    label="First Name"
-                    name="firstName"
-                    placeholder="Enter your first name"
-                    required
-                  />
-                  <FormInput
-                    label="Last Name"
-                    name="lastName"
-                    placeholder="Enter your last name"
-                    required
-                  />
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <FormInput
-                    label="Email"
-                    name="email"
-                    type="email"
-                    placeholder="Enter your email address"
-                    required
-                  />
-                  <FormInput
-                    label="Phone Number"
-                    name="phone"
-                    type="tel"
-                    placeholder="Enter your phone number"
-                  />
-                </div>
-                
-                <div>
-                  <FormInput
-                    label="Company"
-                    name="company"
-                    placeholder="Enter your company name (or 'Small Business')"
-                  />
-                </div>
-                
-                <div>
-                  <FormInput
-                    label="Subject"
-                    name="subject"
-                    placeholder="What is this regarding?"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <FormTextarea
-                    label="Message"
-                    name="message"
-                    placeholder="How can we help your business?"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <AnimatedButton
-                    type="submit"
-                    variant="accent"
-                    className="w-full md:w-auto"
-                    disabled={formStatus === "submitting"}
-                  >
-                    {formStatus === "submitting" ? "Sending..." : "Send Message"}
-                  </AnimatedButton>
-                </div>
-              </form>
-            </div>
-            
-            {/* Contact Information */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Captcha Verification */}
             <div className="animate-on-scroll">
               <Heading as="h2" withAccent>
-                Contact Information
+                Verify & View Contact Details
               </Heading>
               <p className="text-foreground/80 mb-8">
-                You can also reach us directly using the contact information below.
+                To protect our contact information from spam bots, please complete the verification below.
               </p>
               
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="p-3 rounded-lg bg-accent/10 text-accent">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-6 w-6"
-                    >
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                      <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
+              {contactRevealed ? (
+                <Card className="p-6 border border-accent/20 bg-accent/5">
+                  <div className="flex items-center justify-between mb-4">
+                    <Heading as="h3" className="mb-0">
+                      Contact Information
+                    </Heading>
+                    <Shield className="text-accent h-6 w-6" />
                   </div>
-                  <div>
-                    <h3 className="text-lg font-medium">Address</h3>
-                    <p className="text-foreground/70">
-                      185 Clymer St<br />
-                      Brooklyn, NY 11211
+                  <div className="space-y-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="p-3 rounded-lg bg-accent/10 text-accent">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="h-6 w-6"
+                        >
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                          <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-medium">Address</h3>
+                        <p className="text-foreground/70">
+                          185 Clymer St<br />
+                          Brooklyn, NY 11211
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start space-x-4">
+                      <div className="p-3 rounded-lg bg-accent/10 text-accent">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="h-6 w-6"
+                        >
+                          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-medium">Phone</h3>
+                        <p className="text-foreground/70">
+                          <a href="tel:9292996365" className="hover:text-accent transition-colors">
+                            929-299-6365
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start space-x-4">
+                      <div className="p-3 rounded-lg bg-accent/10 text-accent">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="h-6 w-6"
+                        >
+                          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                          <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-medium">Email</h3>
+                        <p className="text-foreground/70">
+                          <a href="mailto:sales@goldtechny.com" className="hover:text-accent transition-colors">
+                            sales@goldtechny.com
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start space-x-4">
+                      <div className="p-3 rounded-lg bg-accent/10 text-accent">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="h-6 w-6"
+                        >
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <line x1="12" y1="8" x2="12" y2="12"></line>
+                          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-medium">Support</h3>
+                        <p className="text-foreground/70">
+                          <a href="mailto:support@goldtechny.com" className="hover:text-accent transition-colors">
+                            support@goldtechny.com
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              ) : (
+                <Card className="p-6 border border-accent/20">
+                  <div className="mb-6">
+                    <Heading as="h3" className="text-xl mb-2">
+                      Verify You're Human
+                    </Heading>
+                    <p className="text-foreground/70 text-sm">
+                      Please enter the characters you see below and check the box to verify you're not a robot.
                     </p>
                   </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="p-3 rounded-lg bg-accent/10 text-accent">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-6 w-6"
+                  
+                  <div className="mb-6">
+                    <div className="w-full p-4 bg-gradient-to-r from-accent/10 to-primary/5 rounded-md mb-4 select-none">
+                      <div className="text-2xl font-mono tracking-widest text-foreground/90 select-none" 
+                           style={{ letterSpacing: '0.5em', fontStyle: 'italic', textDecoration: 'line-through' }}>
+                        {captchaValue}
+                      </div>
+                    </div>
+                    
+                    <Input
+                      placeholder="Enter the characters above"
+                      className="mb-4"
+                      value={userInput}
+                      onChange={(e) => setUserInput(e.target.value)}
+                    />
+                    
+                    <div className="flex items-center space-x-2 mb-6">
+                      <Checkbox 
+                        id="human" 
+                        checked={humanChecked}
+                        onCheckedChange={(checked) => {
+                          setHumanChecked(checked === true);
+                        }}
+                      />
+                      <label
+                        htmlFor="human"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        I confirm I am a human and not a robot
+                      </label>
+                    </div>
+                    
+                    <AnimatedButton 
+                      variant="accent" 
+                      className="w-full" 
+                      onClick={handleRevealContact}
                     >
-                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                    </svg>
+                      <Eye className="mr-2 h-4 w-4" />
+                      Reveal Contact Information
+                    </AnimatedButton>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-medium">Phone</h3>
-                    <p className="text-foreground/70">
-                      <a href="tel:9292996365" className="hover:text-accent transition-colors">
-                        929-299-6365
-                      </a>
-                    </p>
-                  </div>
+                </Card>
+              )}
+            </div>
+            
+            {/* Business Hours */}
+            <div className="animate-on-scroll">
+              <Heading as="h2" withAccent>
+                Business Hours
+              </Heading>
+              <p className="text-foreground/80 mb-8">
+                Here's when our team is available to assist you.
+              </p>
+              
+              <Card className="p-6">
+                <div className="grid grid-cols-2 gap-4 text-foreground/70">
+                  <div className="font-medium">Monday - Friday</div>
+                  <div>9:00 AM - 6:00 PM</div>
+                  <div className="font-medium">Saturday</div>
+                  <div>10:00 AM - 2:00 PM</div>
+                  <div className="font-medium">Sunday</div>
+                  <div>Closed</div>
                 </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="p-3 rounded-lg bg-accent/10 text-accent">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-6 w-6"
-                    >
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                      <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-medium">Email</h3>
-                    <p className="text-foreground/70">
-                      <a href="mailto:sales@goldtechny.com" className="hover:text-accent transition-colors">
-                        sales@goldtechny.com
-                      </a>
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="p-3 rounded-lg bg-accent/10 text-accent">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-6 w-6"
-                    >
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <line x1="12" y1="8" x2="12" y2="12"></line>
-                      <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-medium">Support</h3>
-                    <p className="text-foreground/70">
-                      <a href="mailto:support@goldtechny.com" className="hover:text-accent transition-colors">
-                        support@goldtechny.com
-                      </a>
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="mt-8">
-                  <h3 className="text-lg font-medium mb-4">Business Hours</h3>
-                  <div className="grid grid-cols-2 gap-2 text-foreground/70">
-                    <div>Monday - Friday</div>
-                    <div>9:00 AM - 6:00 PM</div>
-                    <div>Saturday</div>
-                    <div>10:00 AM - 2:00 PM</div>
-                    <div>Sunday</div>
-                    <div>Closed</div>
-                  </div>
-                </div>
+              </Card>
+              
+              <div className="mt-8">
+                <Heading as="h3" className="text-xl">
+                  Our Service Area
+                </Heading>
+                <p className="text-foreground/80 mb-4">
+                  We proudly serve small businesses throughout:
+                </p>
+                <ul className="space-y-2 text-foreground/70 list-disc list-inside">
+                  <li>Brooklyn</li>
+                  <li>Manhattan</li>
+                  <li>Queens</li>
+                  <li>Bronx</li>
+                  <li>Staten Island</li>
+                  <li>Long Island (Nassau County)</li>
+                </ul>
               </div>
             </div>
           </div>
