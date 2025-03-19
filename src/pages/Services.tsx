@@ -212,35 +212,6 @@ const services = [
       "Disaster recovery testing",
       "Rapid restore capabilities"
     ]
-  },
-  {
-    title: "Software Development",
-    description: "Custom software solutions tailored to your business needs. We develop applications that streamline your operations and enhance productivity.",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-6 w-6"
-      >
-        <path d="M8 3H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1"></path>
-        <polyline points="10 2 12 5 14 2"></polyline>
-        <polyline points="10 14 7 17 10 20"></polyline>
-        <polyline points="14 14 17 17 14 20"></polyline>
-      </svg>
-    ),
-    features: [
-      "Custom application development",
-      "Software integration",
-      "Web application development",
-      "Mobile app development",
-      "Database design and management",
-      "API development"
-    ]
   }
 ];
 
@@ -262,6 +233,9 @@ const Services = () => {
 
     const elements = document.querySelectorAll(".animate-on-scroll");
     elements.forEach((el) => observer.observe(el));
+
+    // Reset scroll position when component mounts
+    window.scrollTo(0, 0);
 
     return () => {
       elements.forEach((el) => observer.unobserve(el));
