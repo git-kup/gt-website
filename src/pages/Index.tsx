@@ -11,7 +11,7 @@ import {
   Testimonial
 } from "@/components/ui-components";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const services = [
   {
@@ -73,8 +73,8 @@ const services = [
     ),
   },
   {
-    title: "Cloud Computing",
-    description: "Harness the power of the cloud for improved flexibility and scalability.",
+    title: "Desktop Support",
+    description: "Friendly and reliable desktop support for small businesses and startups.",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +86,9 @@ const services = [
         strokeLinejoin="round"
         className="h-6 w-6"
       >
-        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+        <line x1="8" y1="21" x2="16" y2="21"></line>
+        <line x1="12" y1="17" x2="12" y2="21"></line>
       </svg>
     ),
   },
@@ -110,7 +112,23 @@ const testimonials = [
   },
 ];
 
+const images = [
+  "https://images.unsplash.com/photo-1561736778-92e52a7769ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+  "https://images.unsplash.com/photo-1599658880018-c1770c127800?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+  "https://images.unsplash.com/photo-1581092583537-20d51b4b4f1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+];
+
 const Index = () => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  useEffect(() => {
+    const imageInterval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000);
+    
+    return () => clearInterval(imageInterval);
+  }, []);
+
   useEffect(() => {
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
@@ -144,23 +162,41 @@ const Index = () => {
         <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_rgba(212,175,55,0.1),_transparent_50%)] z-0"></div>
         
         <SectionContainer className="relative z-10">
-          <div className="max-w-3xl">
-            <Badge variant="accent" className="mb-4 animate-fade-in">Innovative IT Solutions</Badge>
-            <h1 className="font-display font-bold mb-6 text-balance animate-fade-in">
-              Empowering Businesses with{" "}
-              <span className="text-accent">Cutting-Edge</span> Technology
-            </h1>
-            <p className="text-lg md:text-xl text-foreground/80 mb-8 text-balance animate-fade-in">
-              We deliver customized IT solutions that drive efficiency, 
-              enhance security, and foster growth for businesses of all sizes.
-            </p>
-            <div className="flex flex-wrap gap-4 animate-fade-in">
-              <AnimatedButton variant="default" size="lg" withArrow>
-                Explore Services
-              </AnimatedButton>
-              <AnimatedButton variant="outline" size="lg">
-                Contact Us
-              </AnimatedButton>
+          <div className="flex flex-col lg:flex-row items-center gap-8">
+            <div className="max-w-3xl lg:w-1/2">
+              <Badge variant="accent" className="mb-4 animate-fade-in">Innovative IT Solutions</Badge>
+              <h1 className="font-display font-bold mb-6 text-balance animate-fade-in">
+                Empowering Businesses with{" "}
+                <span className="text-accent">Cutting-Edge</span> Technology
+              </h1>
+              <p className="text-lg md:text-xl text-foreground/80 mb-8 text-balance animate-fade-in">
+                We deliver customized IT solutions that drive efficiency, 
+                enhance security, and foster growth for businesses of all sizes.
+              </p>
+              <div className="flex flex-wrap gap-4 animate-fade-in">
+                <AnimatedButton variant="default" size="lg" withArrow>
+                  Explore Services
+                </AnimatedButton>
+                <AnimatedButton variant="outline" size="lg">
+                  Contact Us
+                </AnimatedButton>
+              </div>
+            </div>
+            <div className="lg:w-1/2 relative h-80 w-full overflow-hidden rounded-xl shadow-lg">
+              {images.map((image, index) => (
+                <div 
+                  key={index}
+                  className={`absolute inset-0 transition-opacity duration-1000 ${
+                    currentImageIndex === index ? 'opacity-100' : 'opacity-0'
+                  }`}
+                >
+                  <img 
+                    src={image} 
+                    alt={`IT services ${index + 1}`} 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </SectionContainer>
@@ -227,10 +263,10 @@ const Index = () => {
                   <line x1="12" y1="17" x2="12" y2="21"></line>
                 </svg>
               </div>
-              <h3 className="text-xl font-medium mb-2">24/7 Support</h3>
+              <h3 className="text-xl font-medium mb-2">Small Business Friendly</h3>
               <p className="text-foreground/70">
-                Our dedicated team provides round-the-clock support to ensure your
-                systems run smoothly at all times.
+                Our solutions are tailored for businesses of all sizes, with special focus 
+                on the unique needs of small businesses and startups.
               </p>
             </Card>
 
@@ -421,7 +457,7 @@ const Index = () => {
       {/* Stats Section */}
       <section className="py-16 bg-silver-light">
         <SectionContainer>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="animate-on-scroll">
               <div className="text-4xl font-bold text-primary mb-2">500+</div>
               <div className="text-foreground/70">Happy Clients</div>
@@ -433,10 +469,6 @@ const Index = () => {
             <div className="animate-on-scroll">
               <div className="text-4xl font-bold text-primary mb-2">15+</div>
               <div className="text-foreground/70">Years of Experience</div>
-            </div>
-            <div className="animate-on-scroll">
-              <div className="text-4xl font-bold text-primary mb-2">24/7</div>
-              <div className="text-foreground/70">Technical Support</div>
             </div>
           </div>
         </SectionContainer>

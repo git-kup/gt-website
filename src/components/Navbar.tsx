@@ -1,142 +1,107 @@
 
-import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { AnimatedButton } from "./ui-components";
+import { Menu, X } from "lucide-react";
+import { useMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const isMobile = useMobile();
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const isScrolled = window.scrollY > 10;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrolled]);
 
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location.pathname]);
-
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Services", path: "/services" },
-    { name: "Portfolio", path: "/portfolio" },
-    { name: "Blog", path: "/blog" },
-    { name: "Contact", path: "/contact" },
+  const routes = [
+    { path: "/", label: "Home" },
+    { path: "/about", label: "About" },
+    { path: "/services", label: "Services" },
+    { path: "/contact", label: "Contact" },
   ];
 
+  const toggleMenu = () => setIsOpen(!isOpen);
+  const closeMenu = () => setIsOpen(false);
+
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-white shadow-sm py-3"
-          : "bg-transparent py-6"
-      )}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
-        <Link
-          to="/"
-          className="text-primary font-display font-bold text-2xl flex items-center"
-        >
-          <span className="text-accent">Gold</span>tech
-        </Link>
+    <header className={cn(
+      "fixed top-0 left-0 w-full z-50 transition-all duration-300",
+      scrolled ? "bg-background/95 shadow-sm backdrop-blur-sm" : "bg-transparent"
+    )}>
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          <Link to="/" className="flex items-center font-bold text-xl text-primary">
+            <span className="text-accent">Gold</span>tech
+          </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={cn(
-                "px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                location.pathname === link.path
-                  ? "text-accent"
-                  : "text-foreground/80 hover:text-accent"
+          {isMobile ? (
+            <>
+              <button 
+                onClick={toggleMenu}
+                className="p-2 focus:outline-none"
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+              >
+                {isOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+
+              {isOpen && (
+                <div className="fixed inset-0 top-20 bg-background z-40">
+                  <nav className="flex flex-col p-8 space-y-4">
+                    {routes.map((route) => (
+                      <Link
+                        key={route.path}
+                        to={route.path}
+                        className={cn(
+                          "py-2 px-4 rounded-lg font-medium text-lg hover:bg-muted transition-colors",
+                          location.pathname === route.path
+                            ? "text-accent"
+                            : "text-foreground/80"
+                        )}
+                        onClick={closeMenu}
+                      >
+                        {route.label}
+                      </Link>
+                    ))}
+                  </nav>
+                </div>
               )}
-            >
-              {link.name}
-            </Link>
-          ))}
-          <AnimatedButton
-            variant="accent"
-            size="sm"
-            className="ml-3"
-            withArrow
-          >
-            Get Started
-          </AnimatedButton>
-        </nav>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            {isMobileMenuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            )}
-          </svg>
-        </button>
-      </div>
-
-      {/* Mobile Navigation */}
-      <div
-        className={cn(
-          "md:hidden absolute top-full left-0 right-0 bg-white shadow-lg transition-all duration-300 overflow-hidden",
-          isMobileMenuOpen ? "max-h-[500px] border-t" : "max-h-0"
-        )}
-      >
-        <div className="px-4 py-2 space-y-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={cn(
-                "block px-3 py-2 rounded-md text-base font-medium transition-colors",
-                location.pathname === link.path
-                  ? "text-accent bg-accent/10"
-                  : "text-foreground hover:text-accent hover:bg-accent/5"
-              )}
-            >
-              {link.name}
-            </Link>
-          ))}
-          <div className="pt-2 pb-3">
-            <AnimatedButton
-              variant="accent"
-              className="w-full"
-              withArrow
-            >
-              Get Started
-            </AnimatedButton>
-          </div>
+            </>
+          ) : (
+            <nav className="flex items-center space-x-8">
+              {routes.map((route) => (
+                <Link
+                  key={route.path}
+                  to={route.path}
+                  className={cn(
+                    "text-sm font-medium transition-colors hover:text-accent",
+                    location.pathname === route.path
+                      ? "text-accent"
+                      : "text-foreground/80"
+                  )}
+                >
+                  {route.label}
+                </Link>
+              ))}
+              <Link
+                to="/contact"
+                className="bg-accent hover:bg-accent/90 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+              >
+                Get Started
+              </Link>
+            </nav>
+          )}
         </div>
       </div>
     </header>
