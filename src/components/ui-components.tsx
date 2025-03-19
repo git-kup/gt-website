@@ -54,6 +54,7 @@ const cardVariants = cva(
       variant: {
         default: "bg-white shadow-md hover:shadow-lg",
         glass: "glass-panel hover:shadow-glass-hover",
+        "glass-panel-dark": "glass-panel-dark", // Added the glass-panel-dark variant
         outline: "border border-border bg-transparent hover:border-accent",
         flat: "bg-muted",
       },
