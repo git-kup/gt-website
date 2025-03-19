@@ -72,8 +72,8 @@ const Contact = () => {
               Contact <span className="text-accent">Goldtech</span> Solutions
             </h1>
             <p className="text-lg text-foreground/80 mb-8 animate-fade-in">
-              Have questions about our services or ready to start your next IT project?
-              Reach out to us and our team will get back to you shortly.
+              Whether you're a small business needing desktop support or a growing company with broader IT needs,
+              we're here to help with personalized solutions that fit your business.
             </p>
           </div>
         </SectionContainer>
@@ -128,7 +128,7 @@ const Contact = () => {
                   <FormInput
                     label="Company"
                     name="company"
-                    placeholder="Enter your company name"
+                    placeholder="Enter your company name (or 'Small Business')"
                   />
                 </div>
                 
@@ -145,7 +145,7 @@ const Contact = () => {
                   <FormTextarea
                     label="Message"
                     name="message"
-                    placeholder="How can we help you?"
+                    placeholder="How can we help your business?"
                     required
                   />
                 </div>
@@ -323,7 +323,7 @@ const Contact = () => {
               Frequently Asked Questions
             </Heading>
             <p className="text-foreground/80 text-balance">
-              Find answers to common questions about our services and how we can help your business.
+              Find answers to common questions about our services and how we can help your small business.
             </p>
           </div>
           
@@ -332,26 +332,24 @@ const Contact = () => {
               <div>
                 <h3 className="text-xl font-medium mb-2">What industries do you serve?</h3>
                 <p className="text-foreground/70">
-                  We serve a wide range of industries including finance, healthcare, manufacturing, 
-                  retail, education, and professional services. Our solutions are tailored to meet 
-                  the specific needs and regulatory requirements of each industry.
+                  We serve businesses of all sizes, with a special focus on small businesses and startups. Our solutions are
+                  tailored to meet your specific needs, whether you're a small retail shop, professional office, or growing startup.
                 </p>
               </div>
               
               <div>
-                <h3 className="text-xl font-medium mb-2">Do you offer 24/7 support?</h3>
+                <h3 className="text-xl font-medium mb-2">Do you offer same-day desktop support?</h3>
                 <p className="text-foreground/70">
-                  Yes, we offer 24/7 support for our managed IT services clients. Our team is 
-                  always available to address any issues that may arise and ensure your systems 
-                  continue to run smoothly.
+                  Yes, we prioritize desktop support for our local clients. For many common issues, 
+                  we can provide same-day assistance to minimize disruption to your business operations.
                 </p>
               </div>
               
               <div>
                 <h3 className="text-xl font-medium mb-2">How quickly can you respond to IT issues?</h3>
                 <p className="text-foreground/70">
-                  Our average response time is under 15 minutes for critical issues. We prioritize 
-                  issues based on severity and impact on your business operations.
+                  We typically respond to service requests within 1-2 hours during business hours. We understand 
+                  that technology problems can significantly impact small businesses, so we prioritize rapid response.
                 </p>
               </div>
             </div>
@@ -360,27 +358,26 @@ const Contact = () => {
               <div>
                 <h3 className="text-xl font-medium mb-2">What is your pricing structure?</h3>
                 <p className="text-foreground/70">
-                  Our pricing is based on the specific services you need and the size of your 
-                  organization. We offer both project-based pricing and monthly subscription models. 
-                  Contact us for a customized quote.
+                  We offer flexible pricing options designed specifically for small businesses, including hourly rates for
+                  on-demand support and affordable monthly packages for ongoing maintenance. We work with your budget to
+                  provide the right level of support.
                 </p>
               </div>
               
               <div>
-                <h3 className="text-xl font-medium mb-2">Can you work with our existing IT team?</h3>
+                <h3 className="text-xl font-medium mb-2">Can you work with our existing IT setup?</h3>
                 <p className="text-foreground/70">
-                  Absolutely. We often collaborate with in-house IT teams to provide specialized 
-                  expertise or additional support. We can work together to determine the best 
-                  division of responsibilities.
+                  Absolutely. We're experienced at working with existing technology setups, and we don't believe in replacing
+                  what's already working. We'll help optimize what you have and only recommend changes that bring real value.
                 </p>
               </div>
               
               <div>
                 <h3 className="text-xl font-medium mb-2">Do you offer training for our staff?</h3>
                 <p className="text-foreground/70">
-                  Yes, we provide comprehensive training for your staff on the systems and 
-                  technologies we implement. We also offer security awareness training to help 
-                  protect your organization from cyber threats.
+                  Yes, we provide practical training for your staff on the systems and 
+                  technologies we implement. We focus on showing your team the skills they'll actually use day-to-day,
+                  including basic troubleshooting they can handle themselves.
                 </p>
               </div>
             </div>
@@ -396,14 +393,14 @@ const Contact = () => {
             <div className="relative z-10">
               <Badge variant="accent" className="mb-4">Let's Work Together</Badge>
               <h2 className="text-3xl md:text-4xl font-display font-semibold mb-4 text-white">
-                Ready to Transform Your IT Infrastructure?
+                IT Support Tailored for Small Businesses
               </h2>
               <p className="text-silver-light mb-8 text-balance">
-                Contact us today to schedule a consultation and discover how Goldtech Solutions 
-                can help your business leverage technology for growth and success.
+                Contact us today to discuss your desktop support needs or to schedule a free consultation.
+                We provide personalized, affordable IT solutions that help your small business succeed.
               </p>
               <AnimatedButton variant="accent" size="lg" withArrow>
-                Schedule a Consultation
+                Schedule a Free Consultation
               </AnimatedButton>
             </div>
           </div>
