@@ -11,7 +11,7 @@ import {
   Testimonial
 } from "@/components/ui-components";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const services = [
   {
@@ -112,23 +112,7 @@ const testimonials = [
   },
 ];
 
-const images = [
-  "https://images.unsplash.com/photo-1561736778-92e52a7769ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1599658880018-c1770c127800?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1581092583537-20d51b4b4f1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-];
-
 const Index = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
-  useEffect(() => {
-    const imageInterval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000);
-    
-    return () => clearInterval(imageInterval);
-  }, []);
-
   useEffect(() => {
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
@@ -174,29 +158,17 @@ const Index = () => {
                 enhance security, and foster growth for businesses of all sizes.
               </p>
               <div className="flex flex-wrap gap-4 animate-fade-in">
-                <AnimatedButton variant="default" size="lg" withArrow>
-                  Explore Services
-                </AnimatedButton>
-                <AnimatedButton variant="outline" size="lg">
-                  Contact Us
-                </AnimatedButton>
+                <Link to="/services">
+                  <AnimatedButton variant="default" size="lg" withArrow className="hover:bg-primary/80 transform hover:scale-105 transition-all">
+                    Explore Services
+                  </AnimatedButton>
+                </Link>
+                <Link to="/contact">
+                  <AnimatedButton variant="outline" size="lg" className="hover:bg-accent/10 transform hover:scale-105 transition-all">
+                    Contact Us
+                  </AnimatedButton>
+                </Link>
               </div>
-            </div>
-            <div className="lg:w-1/2 relative h-80 w-full overflow-hidden rounded-xl shadow-lg">
-              {images.map((image, index) => (
-                <div 
-                  key={index}
-                  className={`absolute inset-0 transition-opacity duration-1000 ${
-                    currentImageIndex === index ? 'opacity-100' : 'opacity-0'
-                  }`}
-                >
-                  <img 
-                    src={image} 
-                    alt={`IT services ${index + 1}`} 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
             </div>
           </div>
         </SectionContainer>
@@ -217,7 +189,7 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card variant="glass" className="p-6 animate-on-scroll">
+            <Card variant="glass" className="p-6 animate-on-scroll hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/10 text-accent mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -246,7 +218,7 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card variant="glass" className="p-6 animate-on-scroll">
+            <Card variant="glass" className="p-6 animate-on-scroll hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/10 text-accent mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -270,7 +242,7 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card variant="glass" className="p-6 animate-on-scroll">
+            <Card variant="glass" className="p-6 animate-on-scroll hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/10 text-accent mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -297,7 +269,7 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card variant="glass" className="p-6 animate-on-scroll">
+            <Card variant="glass" className="p-6 animate-on-scroll hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/10 text-accent mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -321,7 +293,7 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card variant="glass" className="p-6 animate-on-scroll">
+            <Card variant="glass" className="p-6 animate-on-scroll hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/10 text-accent mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -344,7 +316,7 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card variant="glass" className="p-6 animate-on-scroll">
+            <Card variant="glass" className="p-6 animate-on-scroll hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/10 text-accent mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -391,13 +363,14 @@ const Index = () => {
                 title={service.title}
                 description={service.description}
                 icon={service.icon}
+                className="hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]"
               />
             ))}
           </div>
           
           <div className="text-center mt-12 animate-on-scroll">
             <Link to="/services">
-              <AnimatedButton variant="outline" withArrow>
+              <AnimatedButton variant="outline" withArrow className="hover:bg-accent/10 transform hover:scale-105 transition-all">
                 View All Services
               </AnimatedButton>
             </Link>
@@ -420,9 +393,11 @@ const Index = () => {
               Contact us today for a free consultation and discover how Goldtech Solutions
               can help your business thrive with the right technology.
             </p>
-            <AnimatedButton variant="accent" size="lg" withArrow>
-              Schedule a Consultation
-            </AnimatedButton>
+            <Link to="/contact">
+              <AnimatedButton variant="accent" size="lg" withArrow className="hover:bg-accent/90 transform hover:scale-105 transition-all">
+                Schedule a Consultation
+              </AnimatedButton>
+            </Link>
           </div>
         </SectionContainer>
       </section>
@@ -448,6 +423,7 @@ const Index = () => {
                 quote={testimonial.quote}
                 author={testimonial.author}
                 company={testimonial.company}
+                className="hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]"
               />
             ))}
           </div>
@@ -458,15 +434,15 @@ const Index = () => {
       <section className="py-16 bg-silver-light">
         <SectionContainer>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="animate-on-scroll">
+            <div className="animate-on-scroll hover:transform hover:scale-105 transition-all">
               <div className="text-4xl font-bold text-primary mb-2">500+</div>
               <div className="text-foreground/70">Happy Clients</div>
             </div>
-            <div className="animate-on-scroll">
+            <div className="animate-on-scroll hover:transform hover:scale-105 transition-all">
               <div className="text-4xl font-bold text-primary mb-2">1,200+</div>
               <div className="text-foreground/70">Projects Completed</div>
             </div>
-            <div className="animate-on-scroll">
+            <div className="animate-on-scroll hover:transform hover:scale-105 transition-all">
               <div className="text-4xl font-bold text-primary mb-2">15+</div>
               <div className="text-foreground/70">Years of Experience</div>
             </div>
@@ -477,7 +453,7 @@ const Index = () => {
       {/* Contact CTA */}
       <section className="py-16">
         <SectionContainer>
-          <div className="bg-navy-light/5 border border-navy-light/10 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6 animate-on-scroll">
+          <div className="bg-navy-light/5 border border-navy-light/10 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6 animate-on-scroll hover:shadow-lg hover:bg-accent/5 transition-all">
             <div>
               <h3 className="text-2xl md:text-3xl font-display font-semibold mb-2">
                 Ready to Get Started?
@@ -488,7 +464,7 @@ const Index = () => {
             </div>
             <div className="shrink-0">
               <Link to="/contact">
-                <AnimatedButton variant="accent" size="lg" withArrow>
+                <AnimatedButton variant="accent" size="lg" withArrow className="hover:bg-accent/90 transform hover:scale-105 transition-all">
                   Contact Us
                 </AnimatedButton>
               </Link>
