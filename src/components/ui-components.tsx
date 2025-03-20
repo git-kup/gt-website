@@ -196,16 +196,27 @@ export function AnimatedButton({
 }
 
 // Testimonial card component
-export interface TestimonialProps {
+export interface TestimonialProps extends React.HTMLAttributes<HTMLDivElement> {
   quote: string;
   author: string;
   company?: string;
   avatarSrc?: string;
 }
 
-export function Testimonial({ quote, author, company, avatarSrc }: TestimonialProps) {
+export function Testimonial({ 
+  quote, 
+  author, 
+  company, 
+  avatarSrc, 
+  className,
+  ...props 
+}: TestimonialProps) {
   return (
-    <Card variant="glass" className="flex flex-col gap-4">
+    <Card 
+      variant="glass" 
+      className={cn("flex flex-col gap-4", className)}
+      {...props}
+    >
       <div className="text-lg italic text-foreground/80">&ldquo;{quote}&rdquo;</div>
       <div className="flex items-center gap-3 mt-auto">
         {avatarSrc && (
@@ -223,18 +234,25 @@ export function Testimonial({ quote, author, company, avatarSrc }: TestimonialPr
 }
 
 // Service card component
-export interface ServiceCardProps {
+export interface ServiceCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   description: string;
   icon: React.ReactNode;
 }
 
-export function ServiceCard({ title, description, icon }: ServiceCardProps) {
+export function ServiceCard({ 
+  title, 
+  description, 
+  icon, 
+  className,
+  ...props 
+}: ServiceCardProps) {
   return (
     <Card
       variant="glass"
       interactive={true}
-      className="flex flex-col items-start gap-4 h-full transition-all duration-300 group"
+      className={cn("flex flex-col items-start gap-4 h-full transition-all duration-300 group", className)}
+      {...props}
     >
       <div className="p-3 rounded-lg bg-accent/10 text-accent-foreground group-hover:bg-accent group-hover:text-white transition-colors duration-300">
         {icon}
