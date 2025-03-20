@@ -58,7 +58,7 @@ const About = () => {
       {/* Our Mission Section */}
       <section className="py-16">
         <SectionContainer>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="max-w-3xl mx-auto">
             <div className="animate-on-scroll">
               <Badge variant="accent" className="mb-4">Our Mission</Badge>
               <Heading as="h2" withAccent>
@@ -76,14 +76,6 @@ const About = () => {
                 Our team of experts is committed to delivering exceptional service, innovative solutions,
                 and reliable support to help your business reach its full potential in the digital landscape.
               </p>
-            </div>
-            <div className="relative rounded-xl overflow-hidden h-80 animate-on-scroll">
-              <div className="absolute inset-0 bg-gradient-to-br from-navy-light to-navy/90 opacity-20"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-navy-dark text-9xl opacity-10 font-bold flex items-center">
-                  <span className="text-gold">G</span>T
-                </div>
-              </div>
             </div>
           </div>
         </SectionContainer>
@@ -244,65 +236,11 @@ const About = () => {
         </SectionContainer>
       </section>
 
-      {/* Our Team Section */}
-      <section className="py-16">
-        <SectionContainer>
-          <div className="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
-            <Badge variant="accent" className="mb-4">Our Team</Badge>
-            <Heading as="h2" className="text-center">
-              Meet Our Experts
-            </Heading>
-            <p className="text-foreground/80 text-balance">
-              Our team of IT professionals brings together a wealth of experience and 
-              expertise to deliver exceptional solutions for our clients.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Team Member 1 */}
-            <div className="animate-on-scroll">
-              <div className="bg-silver-light rounded-xl overflow-hidden mb-4 aspect-square"></div>
-              <h3 className="text-xl font-medium">Michael Chen</h3>
-              <p className="text-accent mb-2">CEO & Founder</p>
-              <p className="text-foreground/70">
-                With over 20 years of experience in IT, Michael leads our team with a vision 
-                for innovative technology solutions.
-              </p>
-            </div>
-
-            {/* Team Member 2 */}
-            <div className="animate-on-scroll">
-              <div className="bg-silver-light rounded-xl overflow-hidden mb-4 aspect-square"></div>
-              <h3 className="text-xl font-medium">Sarah Johnson</h3>
-              <p className="text-accent mb-2">Chief Technology Officer</p>
-              <p className="text-foreground/70">
-                Sarah specializes in cloud computing and cybersecurity, ensuring our solutions 
-                are at the cutting edge of technology.
-              </p>
-            </div>
-
-            {/* Team Member 3 */}
-            <div className="animate-on-scroll">
-              <div className="bg-silver-light rounded-xl overflow-hidden mb-4 aspect-square"></div>
-              <h3 className="text-xl font-medium">David Rodriguez</h3>
-              <p className="text-accent mb-2">Lead Solutions Architect</p>
-              <p className="text-foreground/70">
-                David designs custom IT solutions that address the unique challenges 
-                and goals of our clients.
-              </p>
-            </div>
-          </div>
-        </SectionContainer>
-      </section>
-
       {/* Our History */}
       <section className="py-16 bg-silver-light">
         <SectionContainer>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="animate-on-scroll order-2 md:order-1">
-              <div className="relative rounded-xl overflow-hidden aspect-video"></div>
-            </div>
-            <div className="animate-on-scroll order-1 md:order-2">
+          <div className="max-w-3xl mx-auto">
+            <div className="animate-on-scroll">
               <Badge variant="accent" className="mb-4">Our History</Badge>
               <Heading as="h2" withAccent>
                 A Decade of Excellence
@@ -319,35 +257,6 @@ const About = () => {
                 Today, we serve hundreds of clients across various industries, helping them leverage technology 
                 to achieve their business objectives and stay ahead in an increasingly digital world.
               </p>
-            </div>
-          </div>
-        </SectionContainer>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16">
-        <SectionContainer>
-          <div className="bg-navy text-white rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto animate-on-scroll relative overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(212,175,55,0.15),_transparent_50%)] z-0"></div>
-            <div className="relative z-10">
-              <Badge variant="accent" className="mb-4">Join Our Team</Badge>
-              <h3 className="text-2xl md:text-3xl font-display font-semibold mb-4">
-                Interested in Working with Us?
-              </h3>
-              <p className="text-silver-light max-w-2xl mx-auto mb-6">
-                We're always looking for talented individuals to join our team. If you're passionate
-                about technology and want to make a difference, we'd love to hear from you.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <AnimatedButton variant="accent" withArrow>
-                  View Open Positions
-                </AnimatedButton>
-                <Link to="/contact">
-                  <AnimatedButton variant="outline">
-                    Contact Us
-                  </AnimatedButton>
-                </Link>
-              </div>
             </div>
           </div>
         </SectionContainer>

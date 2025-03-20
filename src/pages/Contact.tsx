@@ -61,7 +61,7 @@ const Contact = () => {
       {/* Contact Information */}
       <section className="py-16">
         <SectionContainer>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="max-w-2xl mx-auto">
             {/* Contact Details */}
             <div className="animate-on-scroll">
               <Heading as="h2" withAccent>
@@ -202,44 +202,6 @@ const Contact = () => {
                   </Link>
                 </div>
               </Card>
-            </div>
-            
-            {/* Business Hours */}
-            <div className="animate-on-scroll">
-              <Heading as="h2" withAccent>
-                Business Hours
-              </Heading>
-              <p className="text-foreground/80 mb-8">
-                Here's when our team is available to assist you.
-              </p>
-              
-              <Card className="p-6">
-                <div className="grid grid-cols-2 gap-4 text-foreground/70">
-                  <div className="font-medium">Monday - Friday</div>
-                  <div>9:00 AM - 6:00 PM</div>
-                  <div className="font-medium">Saturday</div>
-                  <div>10:00 AM - 2:00 PM</div>
-                  <div className="font-medium">Sunday</div>
-                  <div>Closed</div>
-                </div>
-              </Card>
-              
-              <div className="mt-8">
-                <Heading as="h3" className="text-xl">
-                  Our Service Area
-                </Heading>
-                <p className="text-foreground/80 mb-4">
-                  We proudly serve small businesses throughout:
-                </p>
-                <ul className="space-y-2 text-foreground/70 list-disc list-inside">
-                  <li>Brooklyn</li>
-                  <li>Manhattan</li>
-                  <li>Queens</li>
-                  <li>Bronx</li>
-                  <li>Staten Island</li>
-                  <li>Long Island (Nassau County)</li>
-                </ul>
-              </div>
             </div>
           </div>
         </SectionContainer>

@@ -42,7 +42,6 @@ export function Navbar() {
     { path: "/about", label: "About" },
     { path: "/services", label: "Services" },
     { path: "/contact", label: "Contact" },
-    { path: "/support", label: "Support" },
   ];
 
   const toggleMenu = () => setIsOpen(!isOpen);
