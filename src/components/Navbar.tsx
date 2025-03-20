@@ -54,8 +54,12 @@ export function Navbar() {
     )}>
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center font-bold text-xl text-primary">
-            <span className="text-accent">Gold</span>tech
+          <Link to="/" className="flex items-center">
+            <img 
+              src="/lovable-uploads/17a370cd-2718-477c-918f-c327e9b9d205.png" 
+              alt="Goldtech Solutions" 
+              className="h-10 md:h-12"
+            />
           </Link>
 
           {isMobile ? (
