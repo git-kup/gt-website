@@ -207,43 +207,6 @@ const Contact = () => {
         </SectionContainer>
       </section>
 
-      {/* Map Section */}
-      <section className="py-16 bg-silver-light">
-        <SectionContainer>
-          <div className="animate-on-scroll">
-            <Heading as="h2" className="text-center">
-              Our Location
-            </Heading>
-            <p className="text-foreground/80 text-center max-w-2xl mx-auto mb-8">
-              Visit us at our office in Brooklyn, New York.
-            </p>
-            
-            <div className="aspect-video max-h-[500px] rounded-xl overflow-hidden shadow-lg">
-              <div className="w-full h-full bg-gradient-to-r from-navy/5 to-accent/5 flex items-center justify-center">
-                <div className="p-8 text-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-16 w-16 mx-auto mb-4 text-accent/60"
-                  >
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  <p className="text-foreground/70 text-lg font-medium">
-                    185 Clymer St, Brooklyn, NY 11211
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SectionContainer>
-      </section>
-
       {/* FAQ Section */}
       <section className="py-16">
         <SectionContainer>

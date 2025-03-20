@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import React from "react";
@@ -54,7 +53,7 @@ const cardVariants = cva(
       variant: {
         default: "bg-white shadow-md hover:shadow-lg",
         glass: "glass-panel hover:shadow-glass-hover",
-        "glass-panel-dark": "glass-panel-dark", // Added the glass-panel-dark variant
+        "glass-panel-dark": "glass-panel-dark",
         outline: "border border-border bg-transparent hover:border-accent",
         flat: "bg-muted",
       },
@@ -251,14 +250,23 @@ export function ServiceCard({
     <Card
       variant="glass"
       interactive={true}
-      className={cn("flex flex-col items-start gap-4 h-full transition-all duration-300 group", className)}
+      className={cn("flex flex-col items-start gap-4 h-full transition-all duration-300 group overflow-hidden relative", className)}
       {...props}
     >
-      <div className="p-3 rounded-lg bg-accent/10 text-accent-foreground group-hover:bg-accent group-hover:text-white transition-colors duration-300">
-        {icon}
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-accent/5 to-transparent opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
+      
+      <div className="relative z-10 p-6">
+        <div className="mb-6 p-4 rounded-2xl bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white transition-colors duration-300 transform group-hover:scale-110">
+          <div className="text-3xl">
+            {icon}
+          </div>
+        </div>
+        
+        <h3 className="text-xl font-medium mb-2 group-hover:text-accent transition-colors duration-300">{title}</h3>
+        <p className="text-muted-foreground">{description}</p>
       </div>
-      <h3 className="text-xl font-medium">{title}</h3>
-      <p className="text-muted-foreground">{description}</p>
+      
+      <div className="absolute bottom-0 right-0 w-24 h-24 -mr-6 -mb-6 rounded-full bg-accent/5 group-hover:bg-accent/10 transition-all duration-300"></div>
     </Card>
   );
 }
