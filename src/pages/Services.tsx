@@ -1,249 +1,101 @@
-
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import {
-  AnimatedButton,
-  Badge,
-  Card,
-  Heading,
-  SectionContainer,
-  ServiceCard
-} from "@/components/ui-components";
+import { AnimatedButton, Badge, Card, Heading, SectionContainer, ServiceCard } from "@/components/ui-components";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
 // Define services
-const services = [
-  {
-    title: "IT Infrastructure Management",
-    description: "Comprehensive management of your IT infrastructure to ensure reliability, security, and performance. We handle everything from server maintenance to network monitoring.",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-6 w-6"
-      >
+const services = [{
+  title: "IT Infrastructure Management",
+  description: "Comprehensive management of your IT infrastructure to ensure reliability, security, and performance. We handle everything from server maintenance to network monitoring.",
+  icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
         <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
         <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
         <line x1="6" y1="6" x2="6.01" y2="6"></line>
         <line x1="6" y1="18" x2="6.01" y2="18"></line>
-      </svg>
-    ),
-    features: [
-      "24/7 system monitoring",
-      "Server maintenance and optimization",
-      "Network performance tuning",
-      "Hardware and software updates",
-      "Capacity planning",
-      "Disaster recovery planning"
-    ]
-  },
-  {
-    title: "Cybersecurity Solutions",
-    description: "Protect your business from cyber threats with our comprehensive security services. We implement multi-layered protection strategies to safeguard your data and systems.",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-6 w-6"
-      >
+      </svg>,
+  features: ["24/7 system monitoring", "Server maintenance and optimization", "Network performance tuning", "Hardware and software updates", "Capacity planning", "Disaster recovery planning"]
+}, {
+  title: "Cybersecurity Solutions",
+  description: "Protect your business from cyber threats with our comprehensive security services. We implement multi-layered protection strategies to safeguard your data and systems.",
+  icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-      </svg>
-    ),
-    features: [
-      "Security assessment and audits",
-      "Endpoint protection",
-      "Firewall configuration and management",
-      "Intrusion detection and prevention",
-      "Security awareness training",
-      "Incident response planning"
-    ]
-  },
-  {
-    title: "Network Services",
-    description: "Design, implementation, and support for reliable network infrastructure. We ensure your network is secure, efficient, and scalable to meet your business needs.",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-6 w-6"
-      >
+      </svg>,
+  features: ["Security assessment and audits", "Endpoint protection", "Firewall configuration and management", "Intrusion detection and prevention", "Security awareness training", "Incident response planning"]
+}, {
+  title: "Network Services",
+  description: "Design, implementation, and support for reliable network infrastructure. We ensure your network is secure, efficient, and scalable to meet your business needs.",
+  icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
         <rect x="4" y="4" width="16" height="16" rx="2"></rect>
         <rect x="9" y="9" width="6" height="6"></rect>
         <path d="M15 2v2"></path>
         <path d="M15 20v2"></path>
         <path d="M2 15h2"></path>
         <path d="M20 15h2"></path>
-      </svg>
-    ),
-    features: [
-      "Network design and implementation",
-      "Wireless network solutions",
-      "VPN setup and configuration",
-      "Network security",
-      "Bandwidth management",
-      "Remote access solutions"
-    ]
-  },
-  {
-    title: "Cloud Computing",
-    description: "Harness the power of the cloud for improved flexibility and scalability. We help you migrate to and manage cloud environments that align with your business goals.",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-6 w-6"
-      >
+      </svg>,
+  features: ["Network design and implementation", "Wireless network solutions", "VPN setup and configuration", "Network security", "Bandwidth management", "Remote access solutions"]
+}, {
+  title: "Cloud Computing",
+  description: "Harness the power of the cloud for improved flexibility and scalability. We help you migrate to and manage cloud environments that align with your business goals.",
+  icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
         <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
-      </svg>
-    ),
-    features: [
-      "Cloud migration strategy",
-      "Public, private, and hybrid cloud solutions",
-      "SaaS, PaaS, and IaaS implementation",
-      "Cloud security and compliance",
-      "Cost optimization",
-      "Ongoing cloud management"
-    ]
-  },
-  {
-    title: "IT Consulting",
-    description: "Strategic guidance to help you make informed technology decisions. Our experts provide insights and recommendations tailored to your business objectives.",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-6 w-6"
-      >
+      </svg>,
+  features: ["Cloud migration strategy", "Public, private, and hybrid cloud solutions", "SaaS, PaaS, and IaaS implementation", "Cloud security and compliance", "Cost optimization", "Ongoing cloud management"]
+}, {
+  title: "IT Consulting",
+  description: "Strategic guidance to help you make informed technology decisions. Our experts provide insights and recommendations tailored to your business objectives.",
+  icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
         <polyline points="14 2 14 8 20 8"></polyline>
         <line x1="16" y1="13" x2="8" y2="13"></line>
         <line x1="16" y1="17" x2="8" y2="17"></line>
         <line x1="10" y1="9" x2="8" y2="9"></line>
-      </svg>
-    ),
-    features: [
-      "IT strategy development",
-      "Technology roadmap planning",
-      "Digital transformation guidance",
-      "IT budget planning",
-      "Vendor selection and management",
-      "Process improvement"
-    ]
-  },
-  {
-    title: "Managed IT Services",
-    description: "Comprehensive IT support and management to keep your systems running smoothly. We take care of your IT needs so you can focus on your core business.",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-6 w-6"
-      >
+      </svg>,
+  features: ["IT strategy development", "Technology roadmap planning", "Digital transformation guidance", "IT budget planning", "Vendor selection and management", "Process improvement"]
+}, {
+  title: "Managed IT Services",
+  description: "Comprehensive IT support and management to keep your systems running smoothly. We take care of your IT needs so you can focus on your core business.",
+  icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
         <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
         <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
         <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
         <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
-      </svg>
-    ),
-    features: [
-      "Help desk support",
-      "Remote monitoring and management",
-      "Patch management",
-      "Backup and recovery",
-      "IT asset management",
-      "Proactive maintenance"
-    ]
-  },
-  {
-    title: "Data Backup & Recovery",
-    description: "Protect your critical data with reliable backup and recovery solutions. We ensure your data is safe and can be quickly restored in case of an emergency.",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-6 w-6"
-      >
+      </svg>,
+  features: ["Help desk support", "Remote monitoring and management", "Patch management", "Backup and recovery", "IT asset management", "Proactive maintenance"]
+}, {
+  title: "Data Backup & Recovery",
+  description: "Protect your critical data with reliable backup and recovery solutions. We ensure your data is safe and can be quickly restored in case of an emergency.",
+  icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
         <polyline points="17 8 12 3 7 8"></polyline>
         <line x1="12" y1="3" x2="12" y2="15"></line>
-      </svg>
-    ),
-    features: [
-      "Automated backup systems",
-      "On-site and off-site backup solutions",
-      "Cloud backup services",
-      "Data recovery planning",
-      "Disaster recovery testing",
-      "Rapid restore capabilities"
-    ]
-  }
-];
-
+      </svg>,
+  features: ["Automated backup systems", "On-site and off-site backup solutions", "Cloud backup services", "Data recovery planning", "Disaster recovery testing", "Rapid restore capabilities"]
+}];
 const Services = () => {
   useEffect(() => {
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add("is-visible");
         }
       });
     };
-
     const observer = new IntersectionObserver(handleIntersection, {
       root: null,
       rootMargin: "0px",
-      threshold: 0.1,
+      threshold: 0.1
     });
-
     const elements = document.querySelectorAll(".animate-on-scroll");
-    elements.forEach((el) => observer.observe(el));
+    elements.forEach(el => observer.observe(el));
 
     // Reset scroll position when component mounts
     window.scrollTo(0, 0);
-
     return () => {
-      elements.forEach((el) => observer.unobserve(el));
+      elements.forEach(el => observer.unobserve(el));
     };
   }, []);
-
-  return (
-    <>
+  return <>
       <Navbar />
 
       {/* Hero Section */}
@@ -277,69 +129,13 @@ const Services = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <ServiceCard
-                key={index}
-                title={service.title}
-                description={service.description}
-                icon={service.icon}
-              />
-            ))}
+            {services.map((service, index) => <ServiceCard key={index} title={service.title} description={service.description} icon={service.icon} />)}
           </div>
         </SectionContainer>
       </section>
 
       {/* Featured Services */}
-      {services.slice(0, 4).map((service, index) => (
-        <section key={index} className={`py-16 ${index % 2 === 1 ? 'bg-silver-light' : ''}`}>
-          <SectionContainer>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <div className={`animate-on-scroll ${index % 2 === 1 ? 'order-2 md:order-1' : ''}`}>
-                <Badge variant="accent" className="mb-4">{service.title}</Badge>
-                <Heading as="h2" withAccent>
-                  {service.title}
-                </Heading>
-                <p className="text-foreground/80 mb-6">
-                  {service.description}
-                </p>
-                <div className="space-y-3">
-                  {service.features.map((feature, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-5 w-5 text-accent shrink-0 mt-0.5"
-                      >
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>{feature}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-8">
-                  <Link to="/contact">
-                    <AnimatedButton variant="accent" withArrow>
-                      Get Started
-                    </AnimatedButton>
-                  </Link>
-                </div>
-              </div>
-              <div className={`animate-on-scroll ${index % 2 === 1 ? 'order-1 md:order-2' : ''}`}>
-                <div className="bg-white shadow-lg rounded-xl p-8 aspect-square flex items-center justify-center">
-                  <div className="text-accent text-9xl opacity-20">
-                    {service.icon}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </SectionContainer>
-        </section>
-      ))}
+      {services.slice(0, 4).map((service, index) => {})}
 
       {/* Why Choose Us */}
       <section className="py-16 bg-navy text-white">
@@ -358,16 +154,7 @@ const Services = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card variant="glass-panel-dark" className="p-6 animate-on-scroll">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/20 text-accent mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-6 w-6"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
                   <path d="M12 2v4"></path>
                   <path d="M12 18v4"></path>
                   <path d="m4.93 4.93 2.83 2.83"></path>
@@ -387,16 +174,7 @@ const Services = () => {
 
             <Card variant="glass-panel-dark" className="p-6 animate-on-scroll">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/20 text-accent mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-6 w-6"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
                   <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z"></path>
                 </svg>
               </div>
@@ -409,16 +187,7 @@ const Services = () => {
 
             <Card variant="glass-panel-dark" className="p-6 animate-on-scroll">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/20 text-accent mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-6 w-6"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
                   <path d="M20 11.08V8l-6-6H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h6"></path>
                   <path d="M14 3v5h5"></path>
                   <circle cx="17" cy="17" r="3"></circle>
@@ -524,8 +293,6 @@ const Services = () => {
       </section>
 
       <Footer />
-    </>
-  );
+    </>;
 };
-
 export default Services;
