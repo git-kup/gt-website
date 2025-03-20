@@ -1,143 +1,73 @@
-
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import {
-  AnimatedButton, 
-  Badge, 
-  Card, 
-  Heading, 
-  SectionContainer, 
-  ServiceCard, 
-  Testimonial
-} from "@/components/ui-components";
+import { AnimatedButton, Badge, Card, Heading, SectionContainer, ServiceCard, Testimonial } from "@/components/ui-components";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-
-const services = [
-  {
-    title: "IT Infrastructure Management",
-    description: "Optimize your IT infrastructure for reliability, security, and performance.",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-6 w-6"
-      >
+const services = [{
+  title: "IT Infrastructure Management",
+  description: "Optimize your IT infrastructure for reliability, security, and performance.",
+  icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
         <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
         <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
         <line x1="6" y1="6" x2="6.01" y2="6"></line>
         <line x1="6" y1="18" x2="6.01" y2="18"></line>
       </svg>
-    ),
-  },
-  {
-    title: "Cybersecurity Solutions",
-    description: "Protect your business from threats with our comprehensive security services.",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-6 w-6"
-      >
+}, {
+  title: "Cybersecurity Solutions",
+  description: "Protect your business from threats with our comprehensive security services.",
+  icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
       </svg>
-    ),
-  },
-  {
-    title: "Network Services",
-    description: "Design, implementation, and support for reliable network infrastructure.",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-6 w-6"
-      >
+}, {
+  title: "Network Services",
+  description: "Design, implementation, and support for reliable network infrastructure.",
+  icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
         <path d="M9 2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9z"></path>
         <polyline points="9 2 9 9 16 9"></polyline>
       </svg>
-    ),
-  },
-  {
-    title: "Desktop Support",
-    description: "Friendly and reliable desktop support for small businesses and startups.",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-6 w-6"
-      >
+}, {
+  title: "Desktop Support",
+  description: "Friendly and reliable desktop support for small businesses and startups.",
+  icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
         <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
         <line x1="8" y1="21" x2="16" y2="21"></line>
         <line x1="12" y1="17" x2="12" y2="21"></line>
       </svg>
-    ),
-  },
-];
-
-const testimonials = [
-  {
-    quote: "Goldtech Solutions transformed our IT infrastructure and reduced our operational costs by 30%. Their team was professional, knowledgeable, and exceeded our expectations.",
-    author: "Sarah Johnson",
-    company: "Nexus Marketing",
-  },
-  {
-    quote: "After experiencing a security breach, we hired Goldtech to revamp our cybersecurity systems. They implemented robust solutions that have kept us protected ever since.",
-    author: "Mark Williams",
-    company: "Atlas Financial",
-  },
-  {
-    quote: "Their cloud migration service was seamless. We were able to transition without any downtime, and our team adapted quickly to the new systems.",
-    author: "Jessica Chen",
-    company: "Horizon Tech",
-  },
-];
-
+}];
+const testimonials = [{
+  quote: "Goldtech Solutions transformed our IT infrastructure and reduced our operational costs by 30%. Their team was professional, knowledgeable, and exceeded our expectations.",
+  author: "Sarah Johnson",
+  company: "Nexus Marketing"
+}, {
+  quote: "After experiencing a security breach, we hired Goldtech to revamp our cybersecurity systems. They implemented robust solutions that have kept us protected ever since.",
+  author: "Mark Williams",
+  company: "Atlas Financial"
+}, {
+  quote: "Their cloud migration service was seamless. We were able to transition without any downtime, and our team adapted quickly to the new systems.",
+  author: "Jessica Chen",
+  company: "Horizon Tech"
+}];
 const Index = () => {
   useEffect(() => {
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add("is-visible");
         }
       });
     };
-
     const observer = new IntersectionObserver(handleIntersection, {
       root: null,
       rootMargin: "0px",
-      threshold: 0.1,
+      threshold: 0.1
     });
-
     const elements = document.querySelectorAll(".animate-on-scroll");
-    elements.forEach((el) => observer.observe(el));
-
+    elements.forEach(el => observer.observe(el));
     return () => {
-      elements.forEach((el) => observer.unobserve(el));
+      elements.forEach(el => observer.unobserve(el));
     };
   }, []);
-
-  return (
-    <>
+  return <>
       <Navbar />
       
       {/* Hero Section */}
@@ -191,16 +121,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Card variant="glass" className="p-6 animate-on-scroll hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/10 text-accent mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-6 w-6"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
                   <path d="M12 2v4"></path>
                   <path d="M12 18v4"></path>
                   <path d="m4.93 4.93 2.83 2.83"></path>
@@ -220,16 +141,7 @@ const Index = () => {
 
             <Card variant="glass" className="p-6 animate-on-scroll hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/10 text-accent mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-6 w-6"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
                   <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
                   <line x1="8" y1="21" x2="16" y2="21"></line>
                   <line x1="12" y1="17" x2="12" y2="21"></line>
@@ -244,16 +156,7 @@ const Index = () => {
 
             <Card variant="glass" className="p-6 animate-on-scroll hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/10 text-accent mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-6 w-6"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
                   <path d="M2 3h20"></path>
                   <path d="M10 12h4"></path>
                   <path d="M10 16h4"></path>
@@ -271,16 +174,7 @@ const Index = () => {
 
             <Card variant="glass" className="p-6 animate-on-scroll hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/10 text-accent mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-6 w-6"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
                   <path d="M12 2v4"></path>
                   <path d="M5 10H2a10 10 0 0 0 20 0h-3"></path>
                   <path d="M8 10a4 4 0 0 1 8 0"></path>
@@ -295,16 +189,7 @@ const Index = () => {
 
             <Card variant="glass" className="p-6 animate-on-scroll hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/10 text-accent mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-6 w-6"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
                   <circle cx="12" cy="12" r="10"></circle>
                   <path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z"></path>
                 </svg>
@@ -318,16 +203,7 @@ const Index = () => {
 
             <Card variant="glass" className="p-6 animate-on-scroll hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]">
               <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-accent/10 text-accent mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-6 w-6"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
                   <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
                   <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
                 </svg>
@@ -357,15 +233,7 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {services.map((service, index) => (
-              <ServiceCard
-                key={index}
-                title={service.title}
-                description={service.description}
-                icon={service.icon}
-                className="hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]"
-              />
-            ))}
+            {services.map((service, index) => <ServiceCard key={index} title={service.title} description={service.description} icon={service.icon} className="hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]" />)}
           </div>
           
           <div className="text-center mt-12 animate-on-scroll">
@@ -417,21 +285,13 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Testimonial
-                key={index}
-                quote={testimonial.quote}
-                author={testimonial.author}
-                company={testimonial.company}
-                className="hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]"
-              />
-            ))}
+            {testimonials.map((testimonial, index) => <Testimonial key={index} quote={testimonial.quote} author={testimonial.author} company={testimonial.company} className="hover:shadow-lg hover:bg-accent/5 transition-all transform hover:scale-[1.02]" />)}
           </div>
         </SectionContainer>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-silver-light">
+      <section className="bg-silver-light py-[3px]">
         <SectionContainer>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="animate-on-scroll hover:transform hover:scale-105 transition-all">
@@ -474,8 +334,6 @@ const Index = () => {
       </section>
 
       <Footer />
-    </>
-  );
+    </>;
 };
-
 export default Index;
