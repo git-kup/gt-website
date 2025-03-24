@@ -11,6 +11,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
 export function Navbar() {
   const location = useLocation();
@@ -95,7 +103,7 @@ export function Navbar() {
                         <DropdownMenuTrigger asChild>
                           <Button 
                             variant="outline" 
-                            className="w-full justify-between hover:bg-muted hover:text-accent"
+                            className="w-full justify-between"
                           >
                             Client Resources
                             <ChevronDown className="h-4 w-4 ml-2" />
@@ -134,28 +142,53 @@ export function Navbar() {
                   {route.label}
                 </Link>
               ))}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    className="w-[160px] flex items-center justify-between"
-                  >
-                    Client Resources
-                    <ChevronDown className="h-4 w-4 ml-2" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-popover shadow-lg">
-                  <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent" asChild>
-                    <Link to="/support">Support On-Demand</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent" asChild>
-                    <a href="https://speedtest.net" target="_blank" rel="noopener noreferrer">Speed Test</a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent" asChild>
-                    <a href="https://portal.goldtechny.com/client/login.php" target="_blank" rel="noopener noreferrer">Portal Login</a>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="bg-transparent text-foreground/80 hover:text-accent hover:bg-transparent">
+                      Client Resources
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid gap-3 p-4 w-[220px]">
+                        <li className="row-span-1">
+                          <NavigationMenuLink asChild>
+                            <Link 
+                              to="/support"
+                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-colors"
+                            >
+                              Support On-Demand
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li className="row-span-1">
+                          <NavigationMenuLink asChild>
+                            <a 
+                              href="https://speedtest.net" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-colors"
+                            >
+                              Speed Test
+                            </a>
+                          </NavigationMenuLink>
+                        </li>
+                        <li className="row-span-1">
+                          <NavigationMenuLink asChild>
+                            <a 
+                              href="https://portal.goldtechny.com/client/login.php" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-colors"
+                            >
+                              Portal Login
+                            </a>
+                          </NavigationMenuLink>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
             </nav>
           )}
         </div>
