@@ -94,7 +94,7 @@ export function Navbar() {
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="outline" className="w-full justify-between hover:bg-muted hover:text-accent">
-                            Quick Access <ChevronDown className="ml-2 h-4 w-4" />
+                            Client Resources <ChevronDown className="ml-2 h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-56 bg-popover shadow-lg">
