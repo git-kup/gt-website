@@ -93,8 +93,12 @@ export function Navbar() {
                     <div className="pt-4 border-t border-border/50">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="outline" className="w-full justify-between hover:bg-muted hover:text-accent">
-                            Client Resources <ChevronDown className="ml-2 h-4 w-4" />
+                          <Button 
+                            variant="outline" 
+                            className="w-full justify-between hover:bg-muted hover:text-accent group"
+                          >
+                            <span>Client Resources</span>
+                            <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-56 bg-popover shadow-lg">
@@ -132,8 +136,12 @@ export function Navbar() {
               ))}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="hover:bg-accent/10 hover:text-accent transition-colors min-w-[140px]">
-                    Client Resources <ChevronDown className="ml-2 h-4 w-4" />
+                  <Button 
+                    variant="outline" 
+                    className="w-[140px] flex justify-between items-center hover:bg-accent/10 hover:text-accent transition-colors group"
+                  >
+                    <span>Client Resources</span>
+                    <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56 bg-popover shadow-lg">
