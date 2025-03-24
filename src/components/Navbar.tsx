@@ -132,8 +132,8 @@ export function Navbar() {
               ))}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="hover:bg-accent/10 hover:text-accent transition-colors">
-                    Quick Access <ChevronDown className="ml-2 h-4 w-4" />
+                  <Button variant="outline" className="hover:bg-accent/10 hover:text-accent transition-colors min-w-[140px]">
+                    Client Resources <ChevronDown className="ml-2 h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56 bg-popover shadow-lg">
