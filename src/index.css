@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -179,7 +178,7 @@
 
   /* Interactive Effect classes */
   .magnetic-effect {
-    @apply transition-transform duration-300 ease-out;
+    @apply relative transition-all duration-300;
   }
 
   .glow-effect {
@@ -187,11 +186,11 @@
   }
 
   .glow-effect::before {
-    @apply content-[''] absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out bg-gradient-to-r from-accent/0 via-accent/30 to-accent/0;
+    @apply content-[''] absolute inset-0 opacity-0 transition-all duration-300 ease-in-out bg-gradient-to-r from-accent/0 via-accent/30 to-accent/0;
   }
 
   .glow-effect:hover::before {
-    @apply opacity-100;
+    @apply opacity-100 animate-pulse;
   }
 
   .shimmer {
@@ -199,21 +198,45 @@
   }
 
   .shimmer::after {
-    @apply content-[''] absolute -inset-[100%] w-[400%] h-[200%] animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent;
+    @apply content-[''] absolute top-0 left-[-100%] right-0 bottom-0 z-10 w-[200%] h-full;
+    background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+    animation: shimmer 2s infinite;
   }
 
-  @keyframes shimmer {
-    to {
-      transform: translateX(100%);
-    }
+  .hover-active {
+    @apply shadow-lg;
   }
 
   .hover-lift {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+    @apply transition-all duration-300;
+  }
+  
+  .hover-lift:hover {
+    @apply -translate-y-1 shadow-lg;
   }
 
   .hover-grow {
-    @apply transition-all duration-300 hover:scale-105;
+    @apply transition-all duration-300;
+  }
+  
+  .hover-grow:hover {
+    @apply scale-105;
+  }
+  
+  .hover-border-glow {
+    @apply transition-all duration-300 border border-transparent;
+  }
+  
+  .hover-border-glow:hover {
+    @apply border-accent/50 shadow-[0_0_10px_rgba(212,175,55,0.3)];
+  }
+  
+  .hover-text-glow:hover {
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+  }
+  
+  .btn-bounce:active {
+    transform: scale(0.95);
   }
 }
 
@@ -247,4 +270,34 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* New interactive animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 rgba(212, 175, 55, 0.2); }
+  50% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes border-shine {
+  0% { border-color: rgba(212, 175, 55, 0.2); }
+  50% { border-color: rgba(212, 175, 55, 0.8); }
+  100% { border-color: rgba(212, 175, 55, 0.2); }
+}
+
+.animate-border-shine {
+  animation: border-shine 2s ease-in-out infinite;
+  border: 1px solid rgba(212, 175, 55, 0.2);
 }
