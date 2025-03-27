@@ -25,7 +25,6 @@ export function Navbar() {
   const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   // Reset scroll position on route change
   useEffect(() => {
@@ -67,7 +66,7 @@ export function Navbar() {
             <img 
               src="/lovable-uploads/17a370cd-2718-477c-918f-c327e9b9d205.png" 
               alt="Goldtech Solutions" 
-              className="h-10 md:h-12 transition-transform duration-300 hover:scale-105 animate-float"
+              className="h-10 md:h-12 transition-transform duration-300 hover:scale-105"
             />
           </Link>
 
@@ -78,10 +77,7 @@ export function Navbar() {
                 className="p-2 focus:outline-none transition-transform duration-200 hover:scale-110 active:scale-95"
                 aria-label={isOpen ? "Close menu" : "Open menu"}
               >
-                {isOpen ? 
-                  <X size={24} className="animate-enter" /> : 
-                  <Menu size={24} className="animate-enter" />
-                }
+                {isOpen ? <X size={24} className="animate-fade-in" /> : <Menu size={24} className="animate-fade-in" />}
               </button>
 
               {isOpen && (
@@ -111,27 +107,20 @@ export function Navbar() {
                         <DropdownMenuTrigger asChild>
                           <Button 
                             variant="outline" 
-                            className="w-full justify-between group"
+                            className="w-full justify-between"
                           >
-                            <span className="group-hover:translate-x-1 transition-transform duration-300">Client Resources</span>
-                            <ChevronDown className="h-4 w-4 ml-2 group-hover:rotate-180 transition-transform duration-300" />
+                            Client Resources
+                            <ChevronDown className="h-4 w-4 ml-2" />
                           </Button>
                         </DropdownMenuTrigger>
-                        {/* Fixed positioning by adding sideOffset and positioning to left side */}
-                        <DropdownMenuContent 
-                          side="right" 
-                          align="start" 
-                          sideOffset={10} 
-                          className="w-56 bg-popover shadow-lg animate-scale-in"
-                          forceMount
-                        >
-                          <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent transition-all duration-200 hover:pl-6" asChild>
+                        <DropdownMenuContent align="start" className="w-56 bg-popover shadow-lg">
+                          <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent" asChild>
                             <Link to="/support">Support On-Demand</Link>
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent transition-all duration-200 hover:pl-6" asChild>
+                          <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent" asChild>
                             <a href="https://speedtest.net" target="_blank" rel="noopener noreferrer">Speed Test</a>
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent transition-all duration-200 hover:pl-6" asChild>
+                          <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent" asChild>
                             <a href="https://portal.goldtechny.com/client/login.php" target="_blank" rel="noopener noreferrer">Portal Login</a>
                           </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -147,40 +136,21 @@ export function Navbar() {
                 <Link
                   key={route.path}
                   to={route.path}
-                  onMouseEnter={() => setHoveredLink(route.path)}
-                  onMouseLeave={() => setHoveredLink(null)}
                   className={cn(
-                    "text-sm font-medium transition-all duration-300 relative overflow-hidden group",
+                    "text-sm font-medium transition-all duration-300 hover:text-accent relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-accent after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 hover:translate-y-[-2px]",
                     location.pathname === route.path
-                      ? "text-accent"
-                      : "text-foreground/80 hover:text-accent"
+                      ? "text-accent after:scale-x-100"
+                      : "text-foreground/80"
                   )}
                 >
-                  <span className="relative z-10 inline-block transform transition-transform duration-300 group-hover:translate-y-[-2px]">
-                    {route.label}
-                  </span>
-                  <span 
-                    className={cn(
-                      "absolute bottom-0 left-0 w-full h-0.5 bg-accent transform origin-left transition-transform duration-300", 
-                      location.pathname === route.path || hoveredLink === route.path 
-                        ? "scale-x-100" 
-                        : "scale-x-0"
-                    )} 
-                  />
-                  <span 
-                    className={cn(
-                      "absolute inset-0 bg-accent/5 rounded-full scale-0 transition-transform duration-300", 
-                      hoveredLink === route.path && "scale-100"
-                    )} 
-                  />
+                  {route.label}
                 </Link>
               ))}
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="group bg-transparent text-foreground/80 hover:text-accent hover:bg-transparent transition-all duration-300 hover:translate-y-[-2px]">
-                      <span className="group-hover:text-accent transition-colors duration-300">Client Resources</span>
-                      <ChevronDown className="relative top-[1px] ml-1 h-3 w-3 transition-transform duration-300 group-data-[state=open]:rotate-180 group-hover:rotate-180" />
+                    <NavigationMenuTrigger className="bg-transparent text-foreground/80 hover:text-accent hover:bg-transparent transition-all duration-300 hover:translate-y-[-2px]">
+                      Client Resources
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <ul className="grid gap-3 p-4 w-[220px] animate-scale-in">
@@ -188,9 +158,9 @@ export function Navbar() {
                           <NavigationMenuLink asChild>
                             <Link 
                               to="/support"
-                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-all duration-300 group"
+                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-colors"
                             >
-                              <span className="group-hover:translate-x-1 transition-transform duration-300">Support On-Demand</span>
+                              Support On-Demand
                             </Link>
                           </NavigationMenuLink>
                         </li>
@@ -200,9 +170,9 @@ export function Navbar() {
                               href="https://speedtest.net" 
                               target="_blank" 
                               rel="noopener noreferrer"
-                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-all duration-300 group"
+                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-colors"
                             >
-                              <span className="group-hover:translate-x-1 transition-transform duration-300">Speed Test</span>
+                              Speed Test
                             </a>
                           </NavigationMenuLink>
                         </li>
@@ -212,9 +182,9 @@ export function Navbar() {
                               href="https://portal.goldtechny.com/client/login.php" 
                               target="_blank" 
                               rel="noopener noreferrer"
-                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-all duration-300 group"
+                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-colors"
                             >
-                              <span className="group-hover:translate-x-1 transition-transform duration-300">Portal Login</span>
+                              Portal Login
                             </a>
                           </NavigationMenuLink>
                         </li>
