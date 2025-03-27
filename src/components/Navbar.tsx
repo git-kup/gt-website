@@ -19,6 +19,11 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 export function Navbar() {
   const location = useLocation();
@@ -62,11 +67,11 @@ export function Navbar() {
     )}>
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center hover-effect group">
             <img 
               src="/lovable-uploads/17a370cd-2718-477c-918f-c327e9b9d205.png" 
               alt="Goldtech Solutions" 
-              className="h-10 md:h-12 transition-transform duration-300 hover:scale-105"
+              className="h-10 md:h-12 transition-all duration-500 group-hover:scale-110 group-hover:rotate-[5deg]"
             />
           </Link>
 
@@ -74,7 +79,7 @@ export function Navbar() {
             <>
               <button 
                 onClick={toggleMenu}
-                className="p-2 focus:outline-none transition-transform duration-200 hover:scale-110 active:scale-95"
+                className="p-2 focus:outline-none transition-transform duration-200 hover:scale-110 active:scale-95 hover-effect"
                 aria-label={isOpen ? "Close menu" : "Open menu"}
               >
                 {isOpen ? <X size={24} className="animate-fade-in" /> : <Menu size={24} className="animate-fade-in" />}
@@ -88,7 +93,7 @@ export function Navbar() {
                         key={route.path}
                         to={route.path}
                         className={cn(
-                          "py-2 px-4 rounded-lg font-medium text-lg hover:bg-muted transition-all duration-300 hover:text-accent hover:translate-x-1",
+                          "py-2 px-4 rounded-lg font-medium text-lg hover:bg-muted transition-all duration-300 hover:text-accent hover:translate-x-1 hover-effect",
                           location.pathname === route.path
                             ? "text-accent"
                             : "text-foreground/80",
@@ -107,20 +112,25 @@ export function Navbar() {
                         <DropdownMenuTrigger asChild>
                           <Button 
                             variant="outline" 
-                            className="w-full justify-between"
+                            className="w-full justify-between hover-effect"
                           >
                             Client Resources
                             <ChevronDown className="h-4 w-4 ml-2" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="start" className="w-56 bg-popover shadow-lg">
-                          <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent" asChild>
+                        <DropdownMenuContent 
+                          side="right" 
+                          align="start" 
+                          sideOffset={10}
+                          className="w-56 bg-popover shadow-lg"
+                        >
+                          <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent hover-effect" asChild>
                             <Link to="/support">Support On-Demand</Link>
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent" asChild>
+                          <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent hover-effect" asChild>
                             <a href="https://speedtest.net" target="_blank" rel="noopener noreferrer">Speed Test</a>
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent" asChild>
+                          <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent hover-effect" asChild>
                             <a href="https://portal.goldtechny.com/client/login.php" target="_blank" rel="noopener noreferrer">Portal Login</a>
                           </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -133,23 +143,31 @@ export function Navbar() {
           ) : (
             <nav className="flex items-center space-x-8">
               {routes.map((route) => (
-                <Link
-                  key={route.path}
-                  to={route.path}
-                  className={cn(
-                    "text-sm font-medium transition-all duration-300 hover:text-accent relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-accent after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 hover:translate-y-[-2px]",
-                    location.pathname === route.path
-                      ? "text-accent after:scale-x-100"
-                      : "text-foreground/80"
-                  )}
-                >
-                  {route.label}
-                </Link>
+                <HoverCard key={route.path} openDelay={100} closeDelay={100}>
+                  <HoverCardTrigger asChild>
+                    <Link
+                      to={route.path}
+                      className={cn(
+                        "text-sm font-medium transition-all duration-300 hover:text-accent relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-accent after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 hover:translate-y-[-2px] hover-effect",
+                        location.pathname === route.path
+                          ? "text-accent after:scale-x-100"
+                          : "text-foreground/80"
+                      )}
+                    >
+                      {route.label}
+                    </Link>
+                  </HoverCardTrigger>
+                  <HoverCardContent className="w-auto p-2 bg-popover/90 backdrop-blur-sm animate-scale-in border border-accent/20">
+                    <div className="text-xs text-muted-foreground font-medium">
+                      Navigate to {route.label}
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
               ))}
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="bg-transparent text-foreground/80 hover:text-accent hover:bg-transparent transition-all duration-300 hover:translate-y-[-2px]">
+                    <NavigationMenuTrigger className="bg-transparent text-foreground/80 hover:text-accent hover:bg-transparent transition-all duration-300 hover:translate-y-[-2px] hover-effect">
                       Client Resources
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
@@ -158,9 +176,12 @@ export function Navbar() {
                           <NavigationMenuLink asChild>
                             <Link 
                               to="/support"
-                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-colors"
+                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-colors group hover-effect"
                             >
-                              Support On-Demand
+                              <div className="relative overflow-hidden rounded w-full">
+                                <div className="absolute inset-0 bg-gradient-to-r from-accent/0 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div className="p-1">Support On-Demand</div>
+                              </div>
                             </Link>
                           </NavigationMenuLink>
                         </li>
@@ -170,9 +191,12 @@ export function Navbar() {
                               href="https://speedtest.net" 
                               target="_blank" 
                               rel="noopener noreferrer"
-                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-colors"
+                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-colors group hover-effect"
                             >
-                              Speed Test
+                              <div className="relative overflow-hidden rounded w-full">
+                                <div className="absolute inset-0 bg-gradient-to-r from-accent/0 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div className="p-1">Speed Test</div>
+                              </div>
                             </a>
                           </NavigationMenuLink>
                         </li>
@@ -182,9 +206,12 @@ export function Navbar() {
                               href="https://portal.goldtechny.com/client/login.php" 
                               target="_blank" 
                               rel="noopener noreferrer"
-                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-colors"
+                              className="flex p-2 select-none rounded-md outline-none hover:bg-muted hover:text-accent transition-colors group hover-effect"
                             >
-                              Portal Login
+                              <div className="relative overflow-hidden rounded w-full">
+                                <div className="absolute inset-0 bg-gradient-to-r from-accent/0 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div className="p-1">Portal Login</div>
+                              </div>
                             </a>
                           </NavigationMenuLink>
                         </li>
