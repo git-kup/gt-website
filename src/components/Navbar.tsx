@@ -113,7 +113,7 @@ export function Navbar() {
                             <ChevronDown className="h-4 w-4 ml-2" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-56 bg-popover shadow-lg">
+                        <DropdownMenuContent align="start" className="w-56 bg-popover shadow-lg">
                           <DropdownMenuItem className="cursor-pointer hover:bg-muted hover:text-accent" asChild>
                             <Link to="/support">Support On-Demand</Link>
                           </DropdownMenuItem>
