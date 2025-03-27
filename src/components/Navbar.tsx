@@ -58,7 +58,7 @@ export function Navbar() {
   return (
     <header className={cn(
       "fixed top-0 left-0 w-full z-50 transition-all duration-300",
-      scrolled ? "bg-background/95 shadow-sm backdrop-blur-sm" : "bg-transparent"
+      scrolled || isOpen ? "bg-background/95 shadow-sm backdrop-blur-sm" : "bg-transparent"
     )}>
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-20">
@@ -66,7 +66,7 @@ export function Navbar() {
             <img 
               src="/lovable-uploads/17a370cd-2718-477c-918f-c327e9b9d205.png" 
               alt="Goldtech Solutions" 
-              className="h-10 md:h-12"
+              className="h-10 md:h-12 transition-transform duration-300 hover:scale-105"
             />
           </Link>
 
@@ -74,31 +74,35 @@ export function Navbar() {
             <>
               <button 
                 onClick={toggleMenu}
-                className="p-2 focus:outline-none"
+                className="p-2 focus:outline-none transition-transform duration-200 hover:scale-110 active:scale-95"
                 aria-label={isOpen ? "Close menu" : "Open menu"}
               >
-                {isOpen ? <X size={24} /> : <Menu size={24} />}
+                {isOpen ? <X size={24} className="animate-fade-in" /> : <Menu size={24} className="animate-fade-in" />}
               </button>
 
               {isOpen && (
-                <div className="fixed inset-0 top-20 bg-background z-40">
+                <div className="fixed inset-0 top-20 bg-background z-40 animate-fade-in">
                   <nav className="flex flex-col p-8 space-y-4">
-                    {routes.map((route) => (
+                    {routes.map((route, index) => (
                       <Link
                         key={route.path}
                         to={route.path}
                         className={cn(
-                          "py-2 px-4 rounded-lg font-medium text-lg hover:bg-muted transition-colors hover:text-accent",
+                          "py-2 px-4 rounded-lg font-medium text-lg hover:bg-muted transition-all duration-300 hover:text-accent hover:translate-x-1",
                           location.pathname === route.path
                             ? "text-accent"
-                            : "text-foreground/80"
+                            : "text-foreground/80",
+                          "animate-fade-in"
                         )}
+                        style={{
+                          animationDelay: `${index * 50}ms`
+                        }}
                         onClick={closeMenu}
                       >
                         {route.label}
                       </Link>
                     ))}
-                    <div className="pt-4 border-t border-border/50">
+                    <div className="pt-4 border-t border-border/50 animate-fade-in" style={{ animationDelay: "200ms" }}>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button 
@@ -133,7 +137,7 @@ export function Navbar() {
                   key={route.path}
                   to={route.path}
                   className={cn(
-                    "text-sm font-medium transition-colors hover:text-accent relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-accent after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300",
+                    "text-sm font-medium transition-all duration-300 hover:text-accent relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-accent after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 hover:translate-y-[-2px]",
                     location.pathname === route.path
                       ? "text-accent after:scale-x-100"
                       : "text-foreground/80"
@@ -145,11 +149,11 @@ export function Navbar() {
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="bg-transparent text-foreground/80 hover:text-accent hover:bg-transparent">
+                    <NavigationMenuTrigger className="bg-transparent text-foreground/80 hover:text-accent hover:bg-transparent transition-all duration-300 hover:translate-y-[-2px]">
                       Client Resources
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <ul className="grid gap-3 p-4 w-[220px]">
+                      <ul className="grid gap-3 p-4 w-[220px] animate-scale-in">
                         <li className="row-span-1">
                           <NavigationMenuLink asChild>
                             <Link 
