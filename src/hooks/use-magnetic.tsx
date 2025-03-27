@@ -79,10 +79,16 @@ export function MagneticButton({
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & { strength?: number }) {
   const { magneticProps, isHovered } = useMagnetic({ strength });
   
+  // Fix the TypeScript error by properly merging props
   return (
     <button
       {...props}
-      {...magneticProps}
+      // TypeScript fix: Explicitly cast ref to React.Ref<HTMLButtonElement>
+      ref={magneticProps.ref as React.Ref<HTMLButtonElement>}
+      style={{
+        ...magneticProps.style,
+        ...(props.style || {})
+      }}
       className={`magnetic-effect ${className || ''} ${isHovered ? 'scale-105' : ''}`}
     >
       {children}
